@@ -1,6 +1,7 @@
-# twitter-stream
+# Docker FTW twitter-stream
 
-Docker container to get tweets from certain area using the Streaming API.
+Application that listens on hashtags and prints to stdout or bombs a set of tweets out
+to the public twitter world.
 
 ### Requirements:
 
@@ -10,24 +11,22 @@ Docker container to get tweets from certain area using the Streaming API.
 
 * `docker build -t twitter-stream .`
 
-### Configuration:
+### Environment Variable Configuration:
 
-* Area coordinates:
-    * Edit `files/twitter-stream.py` and set the coordinates of the target area modifying the following lines:
-```
-    # e.g. Seattle
-    MIN_LON, MIN_LAT, MAX_LON, MAX_LAT = [-122.7617609, 47.3450457, -121.8910944, 47.8133273]
-```
+* TRACKS:
+    * set environment variables to listen on custom track. eg (TRACKS=dockerftw,docker)
+* BLAST:
+    * set environment variable BLAST=True if you want to tweet out a blast of tweets
+    * TODO (make this configurable)
 * Twitter API keys:
     * Go to [http://apps.twitter.com](http://apps.twitter.com) and create an application to get the `consumer_key`, `consumer_secret`, `access_token_key` and `access_token_secret`
-    * Then set those values in `files/private_tokens.py`
+    * Then set these values as docker env-file
 
-### Run:
+### Run Listener:
+* ```docker run -it --env-file=./twitter.secrets -e TRACKS=docker,dockerftw twitter-stream```
 
-* ```docker run -d --name twitter-stream -v `pwd`/files:/files twitter-stream /files/run.sh```
-* Collection will run in background
-* Tweets (full JSON) will be added to the `files/tweets.json` file
-* **Note**: Twitter only provides a small percentage of the tweets via the Streaming API. Look for commercial solutions (e.g. Twitter's [Gnip](https://gnip.com/sources/twitter/)) if that's not enough for your project
+### Run Blaster
+* ```docker run -it --env-file=./twitter.secrets -e BLAST=True -e TRACKS=docker,dockerftw twitter-stream```
 
 ### Stop:
 
@@ -36,3 +35,4 @@ Docker container to get tweets from certain area using the Streaming API.
 ### Credits:
 
 * Tweepy: [https://github.com/tweepy/tweepy](https://github.com/tweepy/tweepy)
+* twitter-stream: [https://github.com/rferrerme/twitter-stream](https://github.com/rferrerme/twitter-stream)
