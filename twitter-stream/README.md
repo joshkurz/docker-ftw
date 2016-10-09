@@ -23,6 +23,9 @@ to the public twitter world.
     * a configurable message to send vs the default.
 * RETWEET:
     * if set to True, then we retweet the status.
+* IGNORE_USERS:
+    * ignore csv list of users to retweet. This is usually for the account that is retweeting, so we dont error 
+    on every single RT. Could be for other use cases as well.
 * REPLY:
     * If set to True, then all tweets that are found in the track will be responded too. with "@username WOW... That is so interesting!!!"
 * REPLY_MSG:

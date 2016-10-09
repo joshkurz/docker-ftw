@@ -27,7 +27,7 @@ delete = os.getenv('DELETE_TWEETS', False)
 reply = os.getenv('REPLY', False)
 reply_msg = os.getenv('REPLY_MSG', "Wow... That is so interesting!!!")
 retweet = os.getenv('RETWEET', False)
-ignore_users = os.getenv('IGNORE_TWEETS', 'dockerftw').split(',')
+ignore_users = os.getenv('IGNORE_USERS', 'dockerftw').split(',')
 tweet_count = int(os.getenv('TWEET_COUNT', 3))
 tweet_msg = os.getenv('TWEET_MSG', '#dockerftw baby')
 
