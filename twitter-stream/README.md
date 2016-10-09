@@ -21,6 +21,8 @@ to the public twitter world.
     * how many tweets to send. This defaults to 3
 * TWEET_MSG:
     * a configurable message to send vs the default.
+* RETWEET:
+    * if set to True, then we retweet the status.
 * REPLY:
     * If set to True, then all tweets that are found in the track will be responded too. with "@username WOW... That is so interesting!!!"
 * REPLY_MSG:
