@@ -23,6 +23,9 @@ if not consumer_key or not consumer_secret or not access_token or not access_tok
 # Tracks to listen too
 tracks = os.getenv('TRACKS', "docker, dockerftw")
 blast = os.getenv('BLAST', False)
+delete = os.getenv('DELETE_TWEETS', False)
+tweet_count = int(os.getenv('TWEET_COUNT', 3))
+tweet_msg = os.getenv('TWEET_MSG', '#dockerftw baby')
 
 class StdOutListener(StreamListener):
     """ A listener handles tweets that are received from the stream.
@@ -42,17 +45,28 @@ if __name__ == '__main__':
     try:
         auth = OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
+        api = API(auth)
         
+        if delete == "True":
+            # delete all tweets
+            data = api.home_timeline(count=800)
+            for tweet in data:
+                if tweet.retweeted == False:
+                    try:
+                        api.destroy_status(tweet.id)
+                        print "Deleted %s" % (tweet.text.encode('utf-8').strip())
+                    except:
+                        continue
+            
         if blast == "True":
-            api = API(auth)
             count = 0
             while True:
                 count = count + 1
-                tweet = "#dockerftw baby %s" % (count)
+                tweet = "%s %s" % (tweet_msg, count)
                 print "Tweeting %s" % (tweet)
                 time.sleep(1)  # Delay for 1 second
                 api.update_status(status=tweet)
-                if count == 3:
+                if count > tweet_count:
                     print "Done Tweeting"
                     sys.exit(1)
         else:
