@@ -13,6 +13,8 @@ to the public twitter world.
 
 ### Environment Variable Configuration:
 
+* PORT:
+    * The port the healthcheck webserver runs on
 * TRACKS:
     * set environment variables to listen on custom track. eg (TRACKS=dockerftw,docker)
 * BLAST:
