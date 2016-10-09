@@ -1,0 +1,2 @@
+#!/bin/bash
+(socat -T 1 -d -d TCP-LISTEN:$PORT,crlf,reuseaddr,fork SYSTEM:"echo HTTP/1.0 200; echo Content-Type\: text/plain; echo; cat hc.html")

@@ -1,2 +1,5 @@
 #!/bin/bash
-python twitter-stream.py
+bash ./run-hc-server  &  PIDIOS=$!
+python twitter-stream.py &  PIDMIX=$!
+wait $PIDIOS
+wait $PIDMIX
