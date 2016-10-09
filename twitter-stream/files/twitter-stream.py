@@ -27,6 +27,7 @@ delete = os.getenv('DELETE_TWEETS', False)
 reply = os.getenv('REPLY', False)
 reply_msg = os.getenv('REPLY_MSG', "Wow... That is so interesting!!!")
 retweet = os.getenv('RETWEET', False)
+ignore_users = os.getenv('IGNORE_TWEETS', 'dockerftw').split(',')
 tweet_count = int(os.getenv('TWEET_COUNT', 3))
 tweet_msg = os.getenv('TWEET_MSG', '#dockerftw baby')
 
@@ -45,7 +46,7 @@ class StdOutListener(StreamListener):
         print "@%s: %s" % (username, text)
         
         # if retweet is set
-        if retweet == "True":
+        if retweet == "True" and username not in ignore_users:
             try:
                 api.retweet(id=tweet.get("id"))
                 print "Retweeted Tweet %s" % (tweet.get("id"))
@@ -54,7 +55,7 @@ class StdOutListener(StreamListener):
                 print "Error Retweeting: %s" % (e)
             
         # if reply is set
-        if reply == "True":
+        if reply == "True" and username not in ignore_users:
             try:
                 reply_text = "@%s %s" % (username, reply_msg)
                 api.update_status(status=reply_text, in_reply_to_status_id=tweet.get("id"))
