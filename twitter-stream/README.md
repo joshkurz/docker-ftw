@@ -17,7 +17,16 @@ to the public twitter world.
     * set environment variables to listen on custom track. eg (TRACKS=dockerftw,docker)
 * BLAST:
     * set environment variable BLAST=True if you want to tweet out a blast of tweets
-    * TODO (make this configurable)
+* TWEET_COUNT:
+    * how many tweets to send. This defaults to 3
+* TWEET_MSG:
+    * a configurable message to send vs the default.
+* REPLY:
+    * If set to True, then all tweets that are found in the track will be responded too. with "@username WOW... That is so interesting!!!"
+* REPLY_MSG:
+    * if set, then the reply message will be what you pass in.
+* DELETE_TWEETS:
+    * If set to True, then all tweets will be deleted from account. Use with caution. This is so we can clean up after tweeting a whole bunch of crapola. 
 * Twitter API keys:
     * Go to [http://apps.twitter.com](http://apps.twitter.com) and create an application to get the `consumer_key`, `consumer_secret`, `access_token_key` and `access_token_secret`
     * Then set these values as docker env-file

@@ -25,6 +25,7 @@ tracks = os.getenv('TRACKS', "docker, dockerftw")
 blast = os.getenv('BLAST', False)
 delete = os.getenv('DELETE_TWEETS', False)
 reply = os.getenv('REPLY', False)
+reply_msg = os.getenv('REPLY_MSG', "Wow... That is so interesting!!!")
 tweet_count = int(os.getenv('TWEET_COUNT', 3))
 tweet_msg = os.getenv('TWEET_MSG', '#dockerftw baby')
 
@@ -44,7 +45,7 @@ class StdOutListener(StreamListener):
         # if reply is set
         print "Should we reply? %s" % (reply)
         if reply == "True":
-            reply_text = "@%s Wow... That is so interesting!!!" % (username)
+            reply_text = "@%s %s" % (username, reply_msg)
             api.update_status(status=reply_text, in_reply_to_status_id=tweet.get("id"))
             print "Replied to Tweet %s" % (tweet.get("id"))
             
