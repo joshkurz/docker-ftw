@@ -19,7 +19,7 @@ access_token_secret = os.getenv("ACCESS_SECRET_TOKEN")
 if not consumer_key or not consumer_secret or not access_token or not access_token_secret:
     print "Must provide all secret environment variables"
     sys.exit(1)
-    
+ 
 # Tracks to listen too
 tracks = os.getenv('TRACKS', "docker, dockerftw")
 blast = os.getenv('BLAST', False)
