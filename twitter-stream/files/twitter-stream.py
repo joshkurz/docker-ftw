@@ -49,7 +49,8 @@ class StdOutListener(StreamListener):
             try:
                 api.retweet(id=tweet.get("id"))
                 print "Retweeted Tweet %s" % (tweet.get("id"))
-            except e:
+            except:
+                e = sys.exc_info()[0]
                 print "Error Retweeting: %s" % (e)
             
         # if reply is set
@@ -58,7 +59,8 @@ class StdOutListener(StreamListener):
                 reply_text = "@%s %s" % (username, reply_msg)
                 api.update_status(status=reply_text, in_reply_to_status_id=tweet.get("id"))
                 print "Replied to Tweet %s" % (tweet.get("id"))
-            except e:
+            except:
+                e = sys.exc_info()[0]
                 print "Error Responding: %s" % (e)
             
         return True
