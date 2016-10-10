@@ -21,7 +21,7 @@ if not consumer_key or not consumer_secret or not access_token or not access_tok
     sys.exit(1)
  
 # Tracks to listen too
-tracks = os.getenv('TRACKS', "docker, dockerftw")
+tracks = os.getenv('TRACKS', "docker, dockerftw").split(',')
 blast = os.getenv('BLAST', False)
 delete = os.getenv('DELETE_TWEETS', False)
 reply = os.getenv('REPLY', False)
@@ -30,6 +30,7 @@ retweet = os.getenv('RETWEET', False)
 ignore_users = os.getenv('IGNORE_USERS', 'dockerftw').split(',')
 tweet_count = int(os.getenv('TWEET_COUNT', 3))
 tweet_msg = os.getenv('TWEET_MSG', '#dockerftw baby')
+languages = os.getenv('LANGUAGES', 'en').split(',')
 
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
@@ -95,8 +96,8 @@ if __name__ == '__main__':
         else:
             l = StdOutListener()
             stream = Stream(auth, l)
-            print "Listening to twitter tracks: %s" % (tracks)
-            stream.filter(track=[tracks])
+            print "Listening to twitter tracks: %s in %s" % (tracks, languages)
+            stream.filter(languages=languages, track=tracks)
     except KeyboardInterrupt:
         print "Shutdown requested...exiting"
     except Exception:

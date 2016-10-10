@@ -34,6 +34,8 @@ to the public twitter world.
     * if set, then the reply message will be what you pass in.
 * DELETE_TWEETS:
     * If set to True, then all tweets will be deleted from account. Use with caution. This is so we can clean up after tweeting a whole bunch of crapola. 
+* LANGUAGES:
+    * Set the language filter. Allow for multiple languages, which is a csv of languages. Default is "en"
 * Twitter API keys:
     * Go to [http://apps.twitter.com](http://apps.twitter.com) and create an application to get the `consumer_key`, `consumer_secret`, `access_token_key` and `access_token_secret`
     * Then set these values as docker env-file
