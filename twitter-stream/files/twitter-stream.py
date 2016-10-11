@@ -40,14 +40,28 @@ class StdOutListener(StreamListener):
     """ A listener handles tweets that are received from the stream.
     This is a basic listener that just prints received tweets to stdout.
     """
+    
+    def __init__(self):
+        self.data_payloads = 0
+        ## get blocked users
+        print "getting blocked users"
+        self.blocked = api.blocks_ids().get("ids")
+        print self.blocked
+
     def on_data(self, data):
+        self.data_payloads += 1
         tweet = json.loads(data)
         username = tweet.get("user", {}).get("screen_name", "").encode('utf-8').strip()
         text = tweet.get("text", "").encode('utf-8').strip()
+        _id = tweet.get("id", "")
         print "@%s: %s" % (username, text)
         
+        if self.data_payloads > 20:
+            self.blocked = api.blocks_ids().get("ids")
+            self.data_payloads = 0
+            
         # if retweet is set
-        if retweet == "True" and username not in ignore_users:
+        if retweet == "True" and username not in ignore_users and _id not in self.blocked:
             try:
                 api.retweet(id=tweet.get("id"))
                 print "Retweeted Tweet %s" % (tweet.get("id"))
@@ -55,7 +69,7 @@ class StdOutListener(StreamListener):
                 print e.message[0]['message']
             
         # if reply is set
-        if reply == "True" and username not in ignore_users:
+        if reply == "True" and username not in ignore_users and _id not in self.blocked:
             try:
                 reply_text = "@%s %s" % (username, reply_msg)
                 api.update_status(status=reply_text, in_reply_to_status_id=tweet.get("id"))
