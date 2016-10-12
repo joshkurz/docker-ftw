@@ -31,6 +31,7 @@ ignore_users = os.getenv('IGNORE_USERS', 'dockerftw').split(',')
 tweet_count = int(os.getenv('TWEET_COUNT', 3))
 tweet_msg = os.getenv('TWEET_MSG', '#dockerftw baby')
 languages = os.getenv('LANGUAGES', 'en').split(',')
+reset_blocked_count = os.getenv('RESET_BLOCKED_COUNT', 10)
 
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
@@ -53,10 +54,10 @@ class StdOutListener(StreamListener):
         tweet = json.loads(data)
         username = tweet.get("user", {}).get("screen_name", "").encode('utf-8').strip()
         text = tweet.get("text", "").encode('utf-8').strip()
-        _id = tweet.get("id", "")
+        _id = tweet.get("user", {}).get("id", "")
         print "@%s: %s" % (username, text)
         
-        if self.data_payloads > 20:
+        if self.data_payloads > reset_blocked_count:
             self.blocked = api.blocks_ids().get("ids")
             self.data_payloads = 0
             

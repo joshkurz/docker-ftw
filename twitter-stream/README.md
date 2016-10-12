@@ -39,6 +39,12 @@ to the public twitter world.
 * Twitter API keys:
     * Go to [http://apps.twitter.com](http://apps.twitter.com) and create an application to get the `consumer_key`, `consumer_secret`, `access_token_key` and `access_token_secret`
     * Then set these values as docker env-file
+* RESET_BLOCKED_COUNT
+    * set to have the bot reset the number of tweets it sees before requesting for blocked users. This should be higher if you are following tracks that are tweeted many times. If not you will get throttled by the twitter apis. 
+    * default is 10
+    
+#### Note on blocked users
+If a user is blocked from the account that is tweeting, then that blocekd users will not get retweeted or replied too. This allows you to easily block users from twitter application and then have the bot still adhere to those blocks. 
 
 ### Run Listener:
 * ```docker run -it --env-file=./twitter.secrets -e TRACKS=docker,dockerftw twitter-stream```
