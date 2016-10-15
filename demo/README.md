@@ -11,4 +11,6 @@ and not confining yourself to using it in just one way is a good start to unders
 
 ## run
 
-```docker run -it -e PORT=9000 -p 9000:9000 demo```
+```
+docker run -it -e PORT=9000 -p 9000:9000 demo
+```
